@@ -1,0 +1,10 @@
+c:\users\rafaelpires\source\repos\AOC\AOC\bin\Debug\AOC.exe.config
+c:\users\rafaelpires\source\repos\AOC\AOC\bin\Debug\AOC.exe
+c:\users\rafaelpires\source\repos\AOC\AOC\bin\Debug\AOC.pdb
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.csprojResolveAssemblyReference.cache
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.Form1.resources
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.Properties.Resources.resources
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.csproj.GenerateResource.cache
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.csproj.CoreCompileInputs.cache
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.exe
+c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.pdb
