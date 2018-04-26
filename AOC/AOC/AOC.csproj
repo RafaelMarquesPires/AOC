@@ -45,8 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="memorias\Bloco.cs" />
+    <Compile Include="memorias\Linha.cs" />
     <Compile Include="memorias\MemoriaCache.cs" />
     <Compile Include="memorias\MemoriaRam.cs" />
+    <Compile Include="view\CPU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\CPU.Designer.cs">
+      <DependentUpon>CPU.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\Entradas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,6 +63,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="view\CPU.resx">
+      <DependentUpon>CPU.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\Entradas.resx">
       <DependentUpon>Entradas.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="algoritmos\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

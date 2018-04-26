@@ -8,63 +8,129 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AOC
+namespace AOC.view
 {
-    public partial class Form1 : Form
+    public partial class Entradas : Form
     {
-        public Form1()
+        public Entradas()
         {
             InitializeComponent();
+            ErroRam.Text = "";
+            ErroBlocoRam.Text = "";
+            ErroLinhaCache.Text = "";
         }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void TamanhoRam_KeyUp(object sender, KeyEventArgs e)
         {
             string texto = TamanhoRam.Text;
             if (texto != "")
             {
-                double valor = Math.Sqrt(Convert.ToDouble(texto));
-                if ((valor - (int)valor) != 0)
+                if (VerificarNumeroLog2(Convert.ToDouble(texto)))
                 {
                     ErroRam.Text = "* Memoria RAM deve ser elevado a 2";
                     return;
                 }
             }
             ErroRam.Text = "";
-        }
-
-        private void ErroLinhaCache_Click(object sender, EventArgs e)
-        {
-
         }
         private void TamanhoBloco_KeyUp(object sender, KeyEventArgs e)
         {
-
             string texto = TamanhoBloco.Text;
             if (texto != "")
             {
-                double valor = Math.Sqrt(Convert.ToDouble(texto));
-                if ((valor - (int)valor) != 0)
+                if (VerificarNumeroLog2(Convert.ToDouble(texto)))
                 {
-                    ErroRam.Text = "* Memoria RAM deve ser elevado a 2";
+                    ErroBlocoRam.Text = "* Memoria RAM deve ser elevado a 2";
                     return;
                 }
             }
-            ErroRam.Text = "";
+            ErroBlocoRam.Text = "";
         }
+        private void TamanhoLinhaCache_KeyUp(object sender, KeyEventArgs e)
+        {
+            string texto = TamanhoLinha.Text;
+            if (texto != "")
+            {
+                if (VerificarNumeroLog2(Convert.ToDouble(texto)))
+                {
+                    ErroLinhaCache.Text = "* Memoria RAM deve ser elevado a 2";
+                    return;
+                }
+            }
+            ErroLinhaCache.Text = "";
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string tecnica = Tecnica.Text;
+            string algoritimo = Algoritimo.Text;
+            string sequenciaBlocos = SequeciaBlocos.Text;
+            string tamanhoRam = TamanhoRam.Text;
+            string tamanhoBloco = TamanhoBloco.Text;
+            string tamanhoLinha = TamanhoLinha.Text;
+
+            if (tecnica == "")
+            {
+                MessageBox.Show("Escolha uma tecnica a ser simulada");
+                return;
+            }
+            if (algoritimo == "")
+            {
+                MessageBox.Show("Escolha um algoritimo a ser simulado");
+                return;
+            }
+            if (sequenciaBlocos == "")
+            {
+                MessageBox.Show("Escolha a sequencia de acesso a ser simulado");
+                return;
+            }
+            if (tamanhoRam == "")
+            {
+                MessageBox.Show("Defina o tamanho da memoria ram");
+                return;
+            }
+            else
+            {
+
+                if (VerificarNumeroLog2(Convert.ToDouble(tamanhoRam)))
+                {
+                    MessageBox.Show("Tamanho de ram deve ser um numero log de 2");
+                    return;
+                }
+            }
+            if (tamanhoBloco == "")
+            {
+                MessageBox.Show("Defina o tamanho dos blocos");
+                return;
+            }
+            else
+            {
+                if (VerificarNumeroLog2(Convert.ToDouble(tamanhoBloco)))
+                {
+                    MessageBox.Show("Tamanho dos blocos deve ser um numero log de 2");
+                    return;
+                }
+            }
+            if (tamanhoLinha == "")
+            {
+                MessageBox.Show("Defina o tamanho das linhas");
+                return;
+            }
+            else
+            {
+
+                if (VerificarNumeroLog2(Convert.ToDouble(tamanhoLinha)))
+                {
+                    MessageBox.Show("Tamanho das linhas deve ser um numero log de 2");
+                    return;
+                }
+            }
+            CPU cpu = new CPU();
+            cpu.Visible = true;
+        }
+        private bool VerificarNumeroLog2(double valor)
+        {
+            double raiz = Math.Log(valor, 2);
+            return ((raiz - Math.Floor(raiz)) != 0);
+        }
+
     }
 }

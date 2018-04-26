@@ -8,3 +8,14 @@ c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.csproj.GenerateResource.
 c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.csproj.CoreCompileInputs.cache
 c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.exe
 c:\users\rafaelpires\source\repos\AOC\AOC\obj\Debug\AOC.pdb
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\bin\Debug\AOC.exe.config
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\bin\Debug\AOC.exe
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\bin\Debug\AOC.pdb
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.csprojResolveAssemblyReference.cache
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.Properties.Resources.resources
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.csproj.GenerateResource.cache
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.csproj.CoreCompileInputs.cache
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.exe
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.pdb
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.view.CPU.resources
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.view.Entradas.resources
