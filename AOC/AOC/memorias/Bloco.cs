@@ -8,5 +8,12 @@ namespace AOC.memorias
 {
     class Bloco
     {
+
+        string processo;
+        public Bloco()
+        {
+            processo = "Rafael Lindo Rafael Lindo Rafael Lindo Rafael Lindo";
+        }
+
     }
 }

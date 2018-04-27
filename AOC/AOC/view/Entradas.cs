@@ -62,7 +62,6 @@ namespace AOC.view
         {
             string tecnica = Tecnica.Text;
             string algoritimo = Algoritimo.Text;
-            string sequenciaBlocos = SequeciaBlocos.Text;
             string tamanhoRam = TamanhoRam.Text;
             string tamanhoBloco = TamanhoBloco.Text;
             string tamanhoLinha = TamanhoLinha.Text;
@@ -77,11 +76,6 @@ namespace AOC.view
                 MessageBox.Show("Escolha um algoritimo a ser simulado");
                 return;
             }
-            if (sequenciaBlocos == "")
-            {
-                MessageBox.Show("Escolha a sequencia de acesso a ser simulado");
-                return;
-            }
             if (tamanhoRam == "")
             {
                 MessageBox.Show("Defina o tamanho da memoria ram");
@@ -89,7 +83,6 @@ namespace AOC.view
             }
             else
             {
-
                 if (VerificarNumeroLog2(Convert.ToDouble(tamanhoRam)))
                 {
                     MessageBox.Show("Tamanho de ram deve ser um numero log de 2");
@@ -124,6 +117,7 @@ namespace AOC.view
                 }
             }
             CPU cpu = new CPU();
+            cpu.SetDados(Convert.ToInt32(tamanhoRam), Convert.ToInt32(tamanhoBloco), Convert.ToInt32(tamanhoLinha), tecnica, algoritimo);
             cpu.Visible = true;
         }
         private bool VerificarNumeroLog2(double valor)
@@ -131,6 +125,5 @@ namespace AOC.view
             double raiz = Math.Log(valor, 2);
             return ((raiz - Math.Floor(raiz)) != 0);
         }
-
     }
 }

@@ -32,11 +32,7 @@
             this.ErroLinhaCache = new System.Windows.Forms.Label();
             this.ErroBlocoRam = new System.Windows.Forms.Label();
             this.ErroRam = new System.Windows.Forms.Label();
-            this.SequeciaBlocos = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.Algoritimo = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.Tecnica = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.TamanhoLinha = new System.Windows.Forms.TextBox();
@@ -48,6 +44,8 @@
             this.TamanhoRam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.Algoritimo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,8 +55,6 @@
             this.panel1.Controls.Add(this.ErroLinhaCache);
             this.panel1.Controls.Add(this.ErroBlocoRam);
             this.panel1.Controls.Add(this.ErroRam);
-            this.panel1.Controls.Add(this.SequeciaBlocos);
-            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.Algoritimo);
             this.panel1.Controls.Add(this.label8);
@@ -75,7 +71,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(13, 13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(354, 483);
+            this.panel1.Size = new System.Drawing.Size(354, 431);
             this.panel1.TabIndex = 0;
             // 
             // ErroLinhaCache
@@ -111,56 +107,15 @@
             this.ErroRam.TabIndex = 16;
             this.ErroRam.Text = "Erro Ram";
             // 
-            // SequeciaBlocos
-            // 
-            this.SequeciaBlocos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SequeciaBlocos.Location = new System.Drawing.Point(15, 405);
-            this.SequeciaBlocos.Name = "SequeciaBlocos";
-            this.SequeciaBlocos.Size = new System.Drawing.Size(317, 26);
-            this.SequeciaBlocos.TabIndex = 15;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(11, 381);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(307, 20);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Seq de blocos acessados (separado por ;)";
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(223, 437);
+            this.button1.Location = new System.Drawing.Point(217, 384);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 33);
             this.button1.TabIndex = 13;
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Algoritimo
-            // 
-            this.Algoritimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Algoritimo.FormattingEnabled = true;
-            this.Algoritimo.Items.AddRange(new object[] {
-            "LRU",
-            "LFU",
-            "FIFO"});
-            this.Algoritimo.Location = new System.Drawing.Point(15, 350);
-            this.Algoritimo.Name = "Algoritimo";
-            this.Algoritimo.Size = new System.Drawing.Size(317, 28);
-            this.Algoritimo.TabIndex = 12;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(11, 326);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(179, 20);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Algoritmo de subtituição";
             // 
             // Tecnica
             // 
@@ -271,14 +226,38 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Descrição da arquitetura";
             // 
-            // Form1
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(11, 326);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(179, 20);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Algoritmo de subtituição";
+            // 
+            // Algoritimo
+            // 
+            this.Algoritimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Algoritimo.FormattingEnabled = true;
+            this.Algoritimo.Items.AddRange(new object[] {
+            "LRU",
+            "LFU",
+            "FIFO"});
+            this.Algoritimo.Location = new System.Drawing.Point(15, 350);
+            this.Algoritimo.Name = "Algoritimo";
+            this.Algoritimo.Size = new System.Drawing.Size(317, 28);
+            this.Algoritimo.TabIndex = 12;
+            // 
+            // Entradas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(379, 508);
+            this.ClientSize = new System.Drawing.Size(379, 455);
             this.Controls.Add(this.panel1);
             this.Name = "Entradas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Entradas - AOC e AEDII";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -301,13 +280,11 @@
         private System.Windows.Forms.TextBox TamanhoBloco;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox Algoritimo;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox SequeciaBlocos;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label ErroRam;
         private System.Windows.Forms.Label ErroBlocoRam;
         private System.Windows.Forms.Label ErroLinhaCache;
+        private System.Windows.Forms.ComboBox Algoritimo;
+        private System.Windows.Forms.Label label8;
     }
 }
 
