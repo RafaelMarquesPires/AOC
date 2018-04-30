@@ -18,6 +18,10 @@ namespace AOC.view
             ErroRam.Text = "";
             ErroBlocoRam.Text = "";
             ErroLinhaCache.Text = "";
+            /* FACILITAR OS TESTE */
+            TamanhoBloco.Text = "64";
+            TamanhoLinha.Text = "32";
+            TamanhoRam.Text = "1048576";
         }
         private void TamanhoRam_KeyUp(object sender, KeyEventArgs e)
         {
@@ -117,7 +121,7 @@ namespace AOC.view
                 }
             }
             CPU cpu = new CPU();
-            cpu.SetDados(Convert.ToInt32(tamanhoRam), Convert.ToInt32(tamanhoBloco), Convert.ToInt32(tamanhoLinha), tecnica, algoritimo);
+            cpu.SetDados(Convert.ToInt64(tamanhoRam), Convert.ToInt64(tamanhoBloco), Convert.ToInt64(tamanhoLinha), tecnica, algoritimo);
             cpu.Visible = true;
         }
         private bool VerificarNumeroLog2(double valor)

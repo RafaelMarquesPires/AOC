@@ -33,6 +33,8 @@
             this.ErroBlocoRam = new System.Windows.Forms.Label();
             this.ErroRam = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.Algoritimo = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.Tecnica = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.TamanhoLinha = new System.Windows.Forms.TextBox();
@@ -44,8 +46,6 @@
             this.TamanhoRam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.Algoritimo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,17 +117,41 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // Algoritimo
+            // 
+            this.Algoritimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Algoritimo.FormattingEnabled = true;
+            this.Algoritimo.Items.AddRange(new object[] {
+            "LFU",
+            "LRU"});
+            this.Algoritimo.Location = new System.Drawing.Point(15, 350);
+            this.Algoritimo.Name = "Algoritimo";
+            this.Algoritimo.Size = new System.Drawing.Size(317, 28);
+            this.Algoritimo.Sorted = true;
+            this.Algoritimo.TabIndex = 12;
+            this.Algoritimo.Text = "FIFO";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(11, 326);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(179, 20);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Algoritmo de subtituição";
+            // 
             // Tecnica
             // 
             this.Tecnica.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Tecnica.FormattingEnabled = true;
             this.Tecnica.Items.AddRange(new object[] {
-            "Direta",
             "Associativa"});
             this.Tecnica.Location = new System.Drawing.Point(15, 295);
             this.Tecnica.Name = "Tecnica";
             this.Tecnica.Size = new System.Drawing.Size(317, 28);
             this.Tecnica.TabIndex = 10;
+            this.Tecnica.Text = "Direta";
             // 
             // label6
             // 
@@ -225,29 +249,6 @@
             this.label1.Size = new System.Drawing.Size(213, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Descrição da arquitetura";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(11, 326);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(179, 20);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Algoritmo de subtituição";
-            // 
-            // Algoritimo
-            // 
-            this.Algoritimo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Algoritimo.FormattingEnabled = true;
-            this.Algoritimo.Items.AddRange(new object[] {
-            "LRU",
-            "LFU",
-            "FIFO"});
-            this.Algoritimo.Location = new System.Drawing.Point(15, 350);
-            this.Algoritimo.Name = "Algoritimo";
-            this.Algoritimo.Size = new System.Drawing.Size(317, 28);
-            this.Algoritimo.TabIndex = 12;
             // 
             // Entradas
             // 
