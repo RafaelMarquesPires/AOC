@@ -8,12 +8,18 @@ namespace AOC.memorias
 {
     class Bloco
     {
-
-        string processo;
-        public Bloco()
+        public long id;
+        public long Tag;
+        public string Processo;
+        public Bloco(long id, long tag, string processo)
         {
-            processo = "Rafael Lindo Rafael Lindo Rafael Lindo Rafael Lindo";
+            this.id = id;
+            this.Tag = tag;
+            this.Processo = processo;
         }
-
+        public Object ToObject()
+        {
+            return new { id = id, Tag = Tag, Processo = Processo };
+        }
     }
 }

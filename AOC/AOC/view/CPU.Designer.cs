@@ -42,6 +42,8 @@ namespace AOC.view
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.TamanhoTAG = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MemoriaCache)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MemoriaRam)).BeginInit();
             this.panel1.SuspendLayout();
@@ -67,6 +69,8 @@ namespace AOC.view
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panel1.Controls.Add(this.TamanhoTAG);
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.TamanhoCache);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.TamanhoRAM);
@@ -139,7 +143,6 @@ namespace AOC.view
             this.button1.TabIndex = 6;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel2
             // 
@@ -151,6 +154,25 @@ namespace AOC.view
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(529, 134);
             this.panel2.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(14, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(135, 20);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Tamanho da TAG";
+            // 
+            // TamanhoTAG
+            // 
+            this.TamanhoTAG.AutoSize = true;
+            this.TamanhoTAG.Location = new System.Drawing.Point(247, 79);
+            this.TamanhoTAG.Name = "TamanhoTAG";
+            this.TamanhoTAG.Size = new System.Drawing.Size(74, 13);
+            this.TamanhoTAG.TabIndex = 5;
+            this.TamanhoTAG.Text = "TamanhoTAG";
             // 
             // CPU
             // 
@@ -187,5 +209,7 @@ namespace AOC.view
         private Label label5;
         private Button button1;
         private Panel panel2;
+        private Label TamanhoTAG;
+        private Label label2;
     }
 }

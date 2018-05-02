@@ -13,69 +13,89 @@ namespace AOC.view
 {
     public partial class CPU : Form
     {
-        Bloco[] Blocos;
-        Linha[] Linhas;
+        private Bloco[] Blocos;
+        private Linha[] Linhas;
+        private string Tecnica;
+        private string Algoritmo;
+        private long QuantidadeLinhas, QuantidadeBlocos, TamanhoBloco;
+        private DataTable MemoriaCacheTabela = new DataTable();
+        private DataTable MemoriaRAMTabela = new DataTable();
 
         public CPU()
         {
             InitializeComponent();
         }
-
-        public void SetDados(Int64 tamanhoRAM, Int64 tamanhoBloco, Int64 quantidadeLinha, string tecnica, string algotiritmo)
+        public void SetDados(long tamanhoRAM, long tamanhoBloco, long quantidadeLinha, string tecnica, string algoritmo)
         {
-            Blocos = new Bloco[tamanhoRAM / tamanhoBloco];
-            Linhas = new Linha[quantidadeLinha];
+            this.Tecnica = tecnica.ToUpper();
+            this.Algoritmo = algoritmo.ToUpper();
+            this.QuantidadeLinhas = quantidadeLinha;
+            this.TamanhoBloco = tamanhoBloco;
+
+            /* Cria blocos e valores */
+            long QuantidadeBlocos = tamanhoRAM / TamanhoBloco;
+            Blocos = new Bloco[QuantidadeBlocos];
+            Linhas = new Linha[QuantidadeLinhas];
             TamanhoRAM.Text = tamanhoRAM.ToString() + " bytes";
 
-            /* Calcula tamanho ram */
+            /* Calcula tamanho Cache */
             double tamanhoCache = 0;
             double tag = 0;
-            if (tecnica.ToUpper() == "DIRETA")
+            if (this.Tecnica == "DIRETA")
             {
-                tag = Math.Log((tamanhoBloco / quantidadeLinha), 2);
-                tamanhoCache = (tag + tamanhoBloco) * quantidadeLinha;
+                tag = Math.Log((QuantidadeBlocos / QuantidadeLinhas), 2);
+                tamanhoCache = (tag + TamanhoBloco) * QuantidadeLinhas;
                 TamanhoCache.Text = tamanhoCache.ToString() + " bytes";
             }
             else //Associativa
             {
                 tag = Math.Log(tamanhoRAM , 2);
-                tamanhoCache = tag + (tamanhoBloco * tamanhoBloco);
+                tamanhoCache = (tag + TamanhoBloco) * QuantidadeLinhas;
                 TamanhoCache.Text = tamanhoCache.ToString() + " bytes";
             }
+            TamanhoTAG.Text = tag.ToString();
 
-            MessageBox.Show(tag.ToString());
-            MemoriaRam.DataSource = DadosTabelaRam(tamanhoRAM, tamanhoBloco, quantidadeLinha);
-            MemoriaCache.DataSource = DadosTabelaCache(quantidadeLinha, tamanhoBloco);
-
-
-
-
+            /*Cria tabela RAM e Cache */
+            AtualizaTabelas();
         }
-        private DataTable DadosTabelaCache(Int64 linhas, Int64 tamanhoBloco)
+        private void AtualizaTabelas()
         {
-            DataTable memoriaCache = new DataTable();
-            memoriaCache.Columns.Add("id", typeof(int));
-            memoriaCache.Columns.Add("TAG", typeof(string));
-            memoriaCache.Columns.Add("Linha", typeof(string));
+            MemoriaRam.DataSource = DadosTabelaRam(QuantidadeBlocos, TamanhoBloco);
+            MemoriaCache.DataSource = DadosTabelaCache(QuantidadeLinhas, TamanhoBloco);
+        }
+        private DataTable DadosTabelaCache(long linhas, long tamanhoBloco)
+        {
+            MemoriaCacheTabela.Columns.Add("id", typeof(int));
+            MemoriaCacheTabela.Columns.Add("TAG", typeof(string));
+            MemoriaCacheTabela.Columns.Add("Linha", typeof(string));
 
             for (int i = 0; i < linhas; i++)
             {
-                memoriaCache.Rows.Add(i, null, GerarStringAleatorio(tamanhoBloco));
+                MemoriaCacheTabela.Rows.Add(i, null, GerarStringAleatorio(tamanhoBloco));
             }
-            return memoriaCache;
+            return MemoriaCacheTabela;
         }
-        private DataTable DadosTabelaRam(Int64 tamanhoRam, Int64 tamanhoBloco, Int64 quantidadeLinhas)
+        private DataTable DadosTabelaRam(long quantidadeBlocos, long tamanhoBlocos)
         {
-            DataTable memoriaCache = new DataTable();
-            memoriaCache.Columns.Add("id", typeof(int));
-            memoriaCache.Columns.Add("TAG", typeof(int));
-            memoriaCache.Columns.Add("Linha", typeof(string));
-
-            for (Int64 i = 0; i < tamanhoRam; i += tamanhoBloco)
+            MemoriaRAMTabela.Columns.Add("id", typeof(long));
+            MemoriaRAMTabela.Columns.Add("Tag", typeof(long));
+            MemoriaRAMTabela.Columns.Add("Processo ", typeof(string));
+            if (Tecnica == "DIRETA")
             {
-                memoriaCache.Rows.Add(i, (i % quantidadeLinhas), GerarStringAleatorio(tamanhoBloco));
+                for (long i = 0; i < quantidadeBlocos; i++)
+                {
+                    Blocos[i] = new Bloco(i, (i % QuantidadeLinhas), GerarStringAleatorio(tamanhoBlocos));
+                    MemoriaRAMTabela.Rows.Add(i, (i % QuantidadeLinhas), GerarStringAleatorio(tamanhoBlocos));
+                }
             }
-            return memoriaCache;
+            else
+            {
+                for (long i = 0; i < quantidadeBlocos; i += tamanhoBlocos)
+                {
+                    MemoriaRAMTabela.Rows.Add(i, 0, GerarStringAleatorio(tamanhoBlocos));
+                }
+            }
+            return MemoriaCacheTabela;
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -85,10 +105,21 @@ namespace AOC.view
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int carga = Convert.ToInt32(CargaBloco.Text);
+            if (this.Tecnica == "DIRETA")
+            {
+                MemoriaCacheTabela.Rows[(int)(carga % QuantidadeLinhas)].SetParentRow(MemoriaRAMTabela.Rows[carga]);
+                MemoriaRAMTabela.Rows[carga].SetField("Processo", "Memoria Cache");
 
+            }
+            else
+            {
+                MessageBox.Show("nÃIO IMPLEMENTADO");
+            }
+            AtualizaTabelas();
           //  CargaBloco.Text;
         }
-        private string GerarStringAleatorio(Int64 quantidade)
+        private string GerarStringAleatorio(long quantidade)
         {
             string stringGerada = string.Empty;
             Random random = new Random();
@@ -98,6 +129,5 @@ namespace AOC.view
             }
             return stringGerada;
         }
-
     }
 }
