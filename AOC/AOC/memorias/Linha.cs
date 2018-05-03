@@ -8,14 +8,18 @@ namespace AOC.memorias
 {
     class Linha
     {
-        public long id;
-        public long Tag;
-        public string Processo;
+        public long id = 0;
+        public long Bloco = 0;
+        public string Processo = " ";
         public Linha(long id, long tag, string processo)
         {
             this.id = id;
-            this.Tag = tag;
-            this.Processo = processo;
+            this.Bloco = tag;
+        }
+        public void SetBloco(Bloco bloco)
+        {
+            this.Bloco = bloco.id;
+            this.Processo = bloco.Processo;
         }
     }
 }

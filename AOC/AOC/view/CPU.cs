@@ -18,8 +18,6 @@ namespace AOC.view
         private string Tecnica;
         private string Algoritmo;
         private long QuantidadeLinhas, QuantidadeBlocos, TamanhoBloco;
-        private DataTable MemoriaCacheTabela = new DataTable();
-        private DataTable MemoriaRAMTabela = new DataTable();
 
         public CPU()
         {
@@ -31,11 +29,11 @@ namespace AOC.view
             this.Algoritmo = algoritmo.ToUpper();
             this.QuantidadeLinhas = quantidadeLinha;
             this.TamanhoBloco = tamanhoBloco;
-
-            /* Cria blocos e valores */
-            long QuantidadeBlocos = tamanhoRAM / TamanhoBloco;
+            this.QuantidadeBlocos = tamanhoRAM / TamanhoBloco;
+            
             Blocos = new Bloco[QuantidadeBlocos];
             Linhas = new Linha[QuantidadeLinhas];
+
             TamanhoRAM.Text = tamanhoRAM.ToString() + " bytes";
 
             /* Calcula tamanho Cache */
@@ -49,76 +47,150 @@ namespace AOC.view
             }
             else //Associativa
             {
-                tag = Math.Log(tamanhoRAM , 2);
+                tag = Math.Log(tamanhoRAM, 2);
                 tamanhoCache = (tag + TamanhoBloco) * QuantidadeLinhas;
                 TamanhoCache.Text = tamanhoCache.ToString() + " bytes";
             }
             TamanhoTAG.Text = tag.ToString();
 
             /*Cria tabela RAM e Cache */
-            AtualizaTabelas();
+            MemoriaCache.DataSource = CriaTabelaCache(QuantidadeLinhas, TamanhoBloco);
+            MemoriaRam.DataSource = CriaTabelaRam(QuantidadeBlocos, TamanhoBloco);
         }
         private void AtualizaTabelas()
         {
-            MemoriaRam.DataSource = DadosTabelaRam(QuantidadeBlocos, TamanhoBloco);
-            MemoriaCache.DataSource = DadosTabelaCache(QuantidadeLinhas, TamanhoBloco);
+            MemoriaCache.DataSource = AtualizaTabelaCache();
+            MemoriaRam.DataSource = AtualizaTabelaRam();
         }
-        private DataTable DadosTabelaCache(long linhas, long tamanhoBloco)
+        private DataTable AtualizaTabelaCache()
         {
-            MemoriaCacheTabela.Columns.Add("id", typeof(int));
-            MemoriaCacheTabela.Columns.Add("TAG", typeof(string));
-            MemoriaCacheTabela.Columns.Add("Linha", typeof(string));
+            DataTable memoriaCacheTabela = new DataTable();
+            memoriaCacheTabela.Columns.Add("id", typeof(int));
+            memoriaCacheTabela.Columns.Add("Numero Bloco", typeof(string));
+            memoriaCacheTabela.Columns.Add("Processo", typeof(string));
+
+            for (int i = 0; i < this.QuantidadeLinhas; i++)
+            {
+                string bloco;
+                if (Linhas[i].Bloco < 0)
+                {
+                    bloco = " ";
+                }
+                else
+                {
+                    bloco = Linhas[i].Bloco.ToString();
+                }
+                memoriaCacheTabela.Rows.Add(Linhas[i].id, bloco, Linhas[i].Processo);
+            }
+            return memoriaCacheTabela;
+        }
+        private DataTable AtualizaTabelaRam() //ERRO FILHA DA PUTA 
+        {
+            DataTable memoriaRAMTabela = new DataTable();
+            memoriaRAMTabela.Columns.Add("id", typeof(int));
+            memoriaRAMTabela.Columns.Add("Bloco", typeof(string));
+            memoriaRAMTabela.Columns.Add("Linha", typeof(string));
+
+            if (Tecnica == "DIRETA")
+            {
+                for (long i = 0; i < this.QuantidadeBlocos; i++)
+                {
+                    memoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
+                }
+            }
+            else
+            {/*
+                for (long i = 0; i < quantidadeBlocos; i++)
+                {
+                    Blocos[i] = new Bloco(i, 0, GerarStringAleatorio(tamanhoBlocos));
+                    MemoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
+                }
+                */
+            }
+            return memoriaRAMTabela;
+        }
+
+        /* CRIAR TABELA INICIAL */
+        private DataTable CriaTabelaCache(long linhas, long tamanhoBloco)
+        {
+            DataTable memoriaCacheTabela = new DataTable();
+            memoriaCacheTabela.Columns.Add("id", typeof(int));
+            memoriaCacheTabela.Columns.Add("Numero Bloco", typeof(string));
+            memoriaCacheTabela.Columns.Add("Processo", typeof(string));
 
             for (int i = 0; i < linhas; i++)
             {
-                MemoriaCacheTabela.Rows.Add(i, null, GerarStringAleatorio(tamanhoBloco));
+                Linhas[i] = new Linha(i, -1, null);
+                string bloco;
+                if (Linhas[i].Bloco < 0)
+                {
+                    bloco = " ";
+                }
+                else
+                {
+                    bloco = Linhas[i].Bloco.ToString();
+                }
+                memoriaCacheTabela.Rows.Add(Linhas[i].id, bloco, Linhas[i].Processo);
             }
-            return MemoriaCacheTabela;
+            return memoriaCacheTabela;
         }
-        private DataTable DadosTabelaRam(long quantidadeBlocos, long tamanhoBlocos)
+        private DataTable CriaTabelaRam(long quantidadeBlocos, long tamanhoBlocos) //ERRO FILHA DA PUTA 
         {
-            MemoriaRAMTabela.Columns.Add("id", typeof(long));
-            MemoriaRAMTabela.Columns.Add("Tag", typeof(long));
-            MemoriaRAMTabela.Columns.Add("Processo ", typeof(string));
+            DataTable memoriaRAMTabela = new DataTable();
+            memoriaRAMTabela.Columns.Add("id", typeof(long));
+            memoriaRAMTabela.Columns.Add("Tag", typeof(long));
+            memoriaRAMTabela.Columns.Add("Processo ", typeof(string));
+
             if (Tecnica == "DIRETA")
             {
                 for (long i = 0; i < quantidadeBlocos; i++)
                 {
                     Blocos[i] = new Bloco(i, (i % QuantidadeLinhas), GerarStringAleatorio(tamanhoBlocos));
-                    MemoriaRAMTabela.Rows.Add(i, (i % QuantidadeLinhas), GerarStringAleatorio(tamanhoBlocos));
+                    memoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
                 }
             }
             else
             {
-                for (long i = 0; i < quantidadeBlocos; i += tamanhoBlocos)
+                for (long i = 0; i < quantidadeBlocos; i++)
                 {
-                    MemoriaRAMTabela.Rows.Add(i, 0, GerarStringAleatorio(tamanhoBlocos));
+                    Blocos[i] = new Bloco(i, 0, GerarStringAleatorio(tamanhoBlocos));
+                    memoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
                 }
             }
-            return MemoriaCacheTabela;
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            return memoriaRAMTabela;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int carga = Convert.ToInt32(CargaBloco.Text);
-            if (this.Tecnica == "DIRETA")
+            string[] carga = CargaBloco.Text.Split(';');
+            for (int i = 0; i < carga.Length; i++)
             {
-                MemoriaCacheTabela.Rows[(int)(carga % QuantidadeLinhas)].SetParentRow(MemoriaRAMTabela.Rows[carga]);
-                MemoriaRAMTabela.Rows[carga].SetField("Processo", "Memoria Cache");
-
+                Int64 valor = Convert.ToInt64(carga[i]);
+                if (this.Tecnica == "DIRETA")
+                {
+                    long tag = Blocos[valor].Tag;
+                    if (Linhas[Blocos[valor].Tag].Bloco < 0)
+                    {
+                        Linhas[tag].SetBloco(Blocos[valor]);
+                        Blocos[valor].Processo = "Memoria cache";
+                    }
+                    else
+                    {
+                        Blocos[Linhas[tag].Bloco].Processo = Linhas[tag].Processo;
+                        Linhas[Blocos[valor].Tag].SetBloco(Blocos[valor]);
+                        Blocos[valor].Processo = "Memoria cache";
+                    }
+                    
+                }
+                else
+                {
+                    /*     Blocos[valor].Processo = "Memoria cache";
+                         Linhas[valor % this.QuantidadeLinhas] = new Linha(Blocos[valor]);*/
+                }
+                AtualizaTabelas();
             }
-            else
-            {
-                MessageBox.Show("nÃIO IMPLEMENTADO");
-            }
-            AtualizaTabelas();
-          //  CargaBloco.Text;
         }
+        
         private string GerarStringAleatorio(long quantidade)
         {
             string stringGerada = string.Empty;

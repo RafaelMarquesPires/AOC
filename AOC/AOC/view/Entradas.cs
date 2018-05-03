@@ -18,10 +18,12 @@ namespace AOC.view
             ErroRam.Text = "";
             ErroBlocoRam.Text = "";
             ErroLinhaCache.Text = "";
+
             /* FACILITAR OS TESTE */
-            TamanhoBloco.Text = "64";
-            TamanhoLinha.Text = "32";
-            TamanhoRam.Text = "1048576";
+            TamanhoBloco.Text = "32";
+            TamanhoLinha.Text = "16";
+            TamanhoRam.Text = "1024";
+            /* Apagar apos */
         }
         private void TamanhoRam_KeyUp(object sender, KeyEventArgs e)
         {
