@@ -1,12 +1,6 @@
 ﻿using AOC.memorias;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AOC.view
@@ -15,10 +9,9 @@ namespace AOC.view
     {
         private Bloco[] Blocos;
         private Linha[] Linhas;
-        private string Tecnica;
-        private string Algoritmo;
-        private long QuantidadeLinhas, QuantidadeBlocos, TamanhoBloco;
-        //private List<object> a;
+        private Estrutura[] EstruturaDados;
+        private string Tecnica, Algoritmo;
+        private long QuantidadeLinhas, QuantidadeBlocos, TamanhoBloco, Tempo;
 
         public CPU()
         {
@@ -31,15 +24,12 @@ namespace AOC.view
             this.QuantidadeLinhas = quantidadeLinha;
             this.TamanhoBloco = tamanhoBloco;
             this.QuantidadeBlocos = tamanhoRAM / TamanhoBloco;
-           // this.a = new List<object>(this.QuantidadeBlocos);
+            this.Tempo = 0;
 
-
-
-            Blocos = new Bloco[QuantidadeBlocos];
-            Linhas = new Linha[QuantidadeLinhas];
-
-            TamanhoRAM.Text = tamanhoRAM.ToString() + " bytes";
-
+            this.EstruturaDados = new Estrutura[this.QuantidadeLinhas];
+            this.Blocos = new Bloco[QuantidadeBlocos];
+            this.Linhas = new Linha[QuantidadeLinhas];
+            
             /* Calcula tamanho Cache */
             double tamanhoCache = 0;
             double tag = 0;
@@ -47,15 +37,16 @@ namespace AOC.view
             {
                 tag = Math.Log((QuantidadeBlocos / QuantidadeLinhas), 2);
                 tamanhoCache = (tag + TamanhoBloco) * QuantidadeLinhas;
-                TamanhoCache.Text = tamanhoCache.ToString() + " bytes";
             }
             else //Associativa
             {
                 tag = Math.Log(tamanhoRAM, 2);
                 tamanhoCache = (tag + TamanhoBloco) * QuantidadeLinhas;
-                TamanhoCache.Text = tamanhoCache.ToString() + " bytes";
             }
+
             TamanhoTAG.Text = tag.ToString();
+            TamanhoRAM.Text = tamanhoRAM.ToString() + " bytes";
+            TamanhoCache.Text = tamanhoCache.ToString() + " bytes";
 
             /*Cria tabela RAM e Cache */
             MemoriaCache.DataSource = CriaTabelaCache(QuantidadeLinhas, TamanhoBloco);
@@ -94,7 +85,7 @@ namespace AOC.view
             memoriaRAMTabela.Columns.Add("id", typeof(int));
             memoriaRAMTabela.Columns.Add("TAG", typeof(string));
             memoriaRAMTabela.Columns.Add("Linha", typeof(string));
-            
+
             for (long i = 0; i < this.QuantidadeBlocos; i++)
             {
                 memoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
@@ -126,7 +117,7 @@ namespace AOC.view
             }
             return memoriaCacheTabela;
         }
-        private DataTable CriaTabelaRam(long quantidadeBlocos, long tamanhoBlocos) //ERRO FILHA DA PUTA 
+        private DataTable CriaTabelaRam(long quantidadeBlocos, long tamanhoBlocos) 
         {
             DataTable memoriaRAMTabela = new DataTable();
             memoriaRAMTabela.Columns.Add("id", typeof(long));
@@ -171,28 +162,100 @@ namespace AOC.view
                         Linhas[Blocos[valor].Tag].SetBloco(Blocos[valor]);
                         Blocos[valor].Processo = "Memoria cache";
                     }
-                    
+
                 }
                 else //ASSOCIATIVA
                 {
-                    for (int j = 0; j < Linhas.Length; j++)
+                    long posicao = ProcuraEstruturaDadosContem(valor);
+                    //Verifica se a cache tem espaço vazio
+                    if (ProcuraEstruturaDadosVazio()) // true possui espaço
                     {
-                        if (Linhas[j].Bloco < 0)
+                        //Se tem, temos que verificar se o bloco ja esta na cache
+                        if (posicao < 0) //Menor que zero, não possui na cache > 0 possui na cache
                         {
-                            Linhas[j].SetBloco(Blocos[valor]);
-                            Blocos[valor].Processo = "Memoria cache";
-                            break;
+                            for (int j = 0; j < Linhas.Length; j++)
+                            {
+                                if (Linhas[j].Bloco < 0)
+                                {
+                                    EstruturaDados[j] = new Estrutura(valor, Tempo++, 0);
+                                    Linhas[j].SetBloco(Blocos[valor]);
+                                    Blocos[valor].Processo = "Memoria cache";
+                                    break;
+                                }
+                            }
                         }
+                        else
+                        {
+                            EstruturaDados[posicao].Tempo = Tempo++;
+                            EstruturaDados[posicao].Quantidade++;
+                        }
+                    } //Memoria Cache cheia, começa o trabalho dos algoritmos
+                    else
+                    {
+                        //Precisa checar se o bloco ja esta na cache
+                       
+                        if (posicao < 0) //Menor que zero, não possui na cache > 0 possui na cache
+                        {
+
+                        }
+                        else
+                        {
+                            EstruturaDados[posicao].Tempo = Tempo++;
+                            EstruturaDados[posicao].Quantidade++;
+                        }
+
+                        if (this.Algoritmo == "FIFO") //PRIMEIRO A ENTRAR É O PRIMEIRO A SAIR
+                        {
+                            Fifo();
+                        }
+                        MessageBox.Show("CHEIO");
                     }
                 }
                 AtualizaTabelas();
             }
         }
+        private long Fifo()
+        {
+            //index do menor dado
+            long index = -1;
+            long tempo = 0;
+            for (long i = 0; i < EstruturaDados.Length; i++)
+            {
+                if (tempio > EstruturaDados[i].Tempo){
+            }
+            }
+            return 1;
+        }
+        private bool ProcuraEstruturaDadosVazio()
+        {
+            for (long i = 0; i < EstruturaDados.Length; i++)
+            {
+                if (EstruturaDados[i] == null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private long ProcuraEstruturaDadosContem(long id)
+        {
+            for (long i = 0; i < EstruturaDados.Length; i++)
+            {
+                if (EstruturaDados[i] != null)
+                {
+                    if (EstruturaDados[i].id == id)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
         private string GerarStringAleatorio(long quantidade)
         {
             string stringGerada = string.Empty;
             Random random = new Random();
-            for (int i = 0; i < quantidade; i++)
+            for (long i = 0; i < quantidade; i++)
             {
                 stringGerada += (char)random.Next(01, 26);
             }

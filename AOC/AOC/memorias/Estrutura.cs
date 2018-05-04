@@ -8,8 +8,14 @@ namespace AOC.memorias
 {
     class Estrutura
     {
-        public long id { get; set; }
-        public DateTime id { get; set; }
-        public DateTime id { get; set; }
+        public long id = -1;
+        public long Tempo = 0;
+        public long Quantidade = 0;
+        public Estrutura(long id, long tempo, long quantidade)
+        {
+            this.id = id;
+            this.Tempo = tempo;
+            this.Quantidade = quantidade;
+        }
     }
 }

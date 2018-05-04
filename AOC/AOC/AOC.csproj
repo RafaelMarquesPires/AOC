@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="memorias\Bloco.cs" />
+    <Compile Include="memorias\Estrutura.cs" />
     <Compile Include="memorias\Linha.cs" />
     <Compile Include="view\CPU.cs">
       <SubType>Form</SubType>
