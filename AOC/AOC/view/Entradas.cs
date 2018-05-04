@@ -22,7 +22,7 @@ namespace AOC.view
             /* FACILITAR OS TESTE */
             TamanhoBloco.Text = "32";
             TamanhoLinha.Text = "16";
-            TamanhoRam.Text = "1024";
+            TamanhoRam.Text = "32768";
             /* Apagar apos */
         }
         private void TamanhoRam_KeyUp(object sender, KeyEventArgs e)

@@ -18,6 +18,7 @@ namespace AOC.view
         private string Tecnica;
         private string Algoritmo;
         private long QuantidadeLinhas, QuantidadeBlocos, TamanhoBloco;
+        //private List<object> a;
 
         public CPU()
         {
@@ -30,7 +31,10 @@ namespace AOC.view
             this.QuantidadeLinhas = quantidadeLinha;
             this.TamanhoBloco = tamanhoBloco;
             this.QuantidadeBlocos = tamanhoRAM / TamanhoBloco;
-            
+           // this.a = new List<object>(this.QuantidadeBlocos);
+
+
+
             Blocos = new Bloco[QuantidadeBlocos];
             Linhas = new Linha[QuantidadeLinhas];
 
@@ -88,24 +92,12 @@ namespace AOC.view
         {
             DataTable memoriaRAMTabela = new DataTable();
             memoriaRAMTabela.Columns.Add("id", typeof(int));
-            memoriaRAMTabela.Columns.Add("Bloco", typeof(string));
+            memoriaRAMTabela.Columns.Add("TAG", typeof(string));
             memoriaRAMTabela.Columns.Add("Linha", typeof(string));
-
-            if (Tecnica == "DIRETA")
+            
+            for (long i = 0; i < this.QuantidadeBlocos; i++)
             {
-                for (long i = 0; i < this.QuantidadeBlocos; i++)
-                {
-                    memoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
-                }
-            }
-            else
-            {/*
-                for (long i = 0; i < quantidadeBlocos; i++)
-                {
-                    Blocos[i] = new Bloco(i, 0, GerarStringAleatorio(tamanhoBlocos));
-                    MemoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
-                }
-                */
+                memoriaRAMTabela.Rows.Add(Blocos[i].id, Blocos[i].Tag, Blocos[i].Processo);
             }
             return memoriaRAMTabela;
         }
@@ -159,7 +151,6 @@ namespace AOC.view
             }
             return memoriaRAMTabela;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             string[] carga = CargaBloco.Text.Split(';');
@@ -182,15 +173,21 @@ namespace AOC.view
                     }
                     
                 }
-                else
+                else //ASSOCIATIVA
                 {
-                    /*     Blocos[valor].Processo = "Memoria cache";
-                         Linhas[valor % this.QuantidadeLinhas] = new Linha(Blocos[valor]);*/
+                    for (int j = 0; j < Linhas.Length; j++)
+                    {
+                        if (Linhas[j].Bloco < 0)
+                        {
+                            Linhas[j].SetBloco(Blocos[valor]);
+                            Blocos[valor].Processo = "Memoria cache";
+                            break;
+                        }
+                    }
                 }
                 AtualizaTabelas();
             }
         }
-        
         private string GerarStringAleatorio(long quantidade)
         {
             string stringGerada = string.Empty;
