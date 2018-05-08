@@ -77,7 +77,7 @@ namespace AOC.view
                 MessageBox.Show("Escolha uma tecnica a ser simulada");
                 return;
             }
-            if (algoritimo == "")
+            if (algoritimo == "" && tecnica.ToUpper() == "ASSOCIATIVA")
             {
                 MessageBox.Show("Escolha um algoritimo a ser simulado");
                 return;
@@ -115,7 +115,6 @@ namespace AOC.view
             }
             else
             {
-
                 if (VerificarNumeroLog2(Convert.ToDouble(tamanhoLinha)))
                 {
                     MessageBox.Show("Tamanho das linhas deve ser um numero log de 2");
@@ -123,13 +122,28 @@ namespace AOC.view
                 }
             }
             CPU cpu = new CPU();
-            cpu.SetDados(Convert.ToInt64(tamanhoRam), Convert.ToInt64(tamanhoBloco), Convert.ToInt64(tamanhoLinha), tecnica, algoritimo);
+            cpu.SetDados(this, Convert.ToInt64(tamanhoRam), Convert.ToInt64(tamanhoBloco), Convert.ToInt64(tamanhoLinha), tecnica, algoritimo);
+            this.Visible = false;
             cpu.Visible = true;
         }
         private bool VerificarNumeroLog2(double valor)
         {
             double raiz = Math.Log(valor, 2);
             return ((raiz - Math.Floor(raiz)) != 0);
+        }
+
+        private void Tecnica_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (Tecnica.Text.ToUpper() == "DIRETA")
+            {
+                AlgoritmoSub.Visible = false;
+                Algoritimo.Visible = false;
+            }
+            else
+            {
+                AlgoritmoSub.Visible = true;
+                Algoritimo.Visible = true;
+            }
         }
     }
 }

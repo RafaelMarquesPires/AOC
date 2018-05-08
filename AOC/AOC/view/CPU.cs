@@ -12,13 +12,15 @@ namespace AOC.view
         private Estrutura[] EstruturaDados;
         private string Tecnica, Algoritmo;
         private long QuantidadeLinhas, QuantidadeBlocos, TamanhoBloco, Tempo;
+        private Entradas Parent;
 
         public CPU()
         {
             InitializeComponent();
         }
-        public void SetDados(long tamanhoRAM, long tamanhoBloco, long quantidadeLinha, string tecnica, string algoritmo)
+        public void SetDados(Entradas parent, long tamanhoRAM, long tamanhoBloco, long quantidadeLinha, string tecnica, string algoritmo)
         {
+            this.Parent = parent;
             this.Tecnica = tecnica.ToUpper();
             this.Algoritmo = algoritmo.ToUpper();
             this.QuantidadeLinhas = quantidadeLinha;
@@ -144,76 +146,112 @@ namespace AOC.view
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] carga = CargaBloco.Text.Split(';');
-            for (int i = 0; i < carga.Length; i++)
+            if (CargaBloco.Text != "")
             {
-                Int64 valor = Convert.ToInt64(carga[i]);
-                if (this.Tecnica == "DIRETA")
-                {
-                    long tag = Blocos[valor].Tag;
-                    if (Linhas[Blocos[valor].Tag].Bloco < 0)
-                    {
-                        Linhas[tag].SetBloco(Blocos[valor]);
-                        Blocos[valor].Processo = "Memoria cache";
-                    }
-                    else
-                    {
-                        Blocos[Linhas[tag].Bloco].Processo = Linhas[tag].Processo;
-                        Linhas[Blocos[valor].Tag].SetBloco(Blocos[valor]);
-                        Blocos[valor].Processo = "Memoria cache";
-                    }
-
-                }
-                else //ASSOCIATIVA
-                {
-                    long posicao = ProcuraEstruturaDadosContem(valor);
-                    //Verifica se a cache tem espaço vazio
-                    if (ProcuraEstruturaDadosVazio()) // true possui espaço
-                    {
-                        //Se tem, temos que verificar se o bloco ja esta na cache
-                        if (posicao < 0) //Menor que zero, não possui na cache > 0 possui na cache
-                        {
-                            for (int j = 0; j < Linhas.Length; j++)
-                            {
-                                if (Linhas[j].Bloco < 0)
-                                {
-                                    EstruturaDados[j] = new Estrutura(valor, Tempo++, 0);
-                                    Linhas[j].SetBloco(Blocos[valor]);
-                                    Blocos[valor].Processo = "Memoria cache";
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            EstruturaDados[posicao].Tempo = Tempo++;
-                            EstruturaDados[posicao].Quantidade++;
-                        }
-                    } //Memoria Cache cheia, começa o trabalho dos algoritmos
-                    else
-                    {
-                        //Precisa checar se o bloco ja esta na cache
-                       
-                        if (posicao < 0) //Menor que zero, não possui na cache > 0 possui na cache
-                        {
-
-                        }
-                        else
-                        {
-                            EstruturaDados[posicao].Tempo = Tempo++;
-                            EstruturaDados[posicao].Quantidade++;
-                        }
-
-                        if (this.Algoritmo == "FIFO") //PRIMEIRO A ENTRAR É O PRIMEIRO A SAIR
-                        {
-                            Fifo();
-                        }
-                        MessageBox.Show("CHEIO");
-                    }
-                }
-                AtualizaTabelas();
+                CarregaBlocos();
             }
         }
+        private void CarregaBlocos() { 
+            string[] carga = CargaBloco.Text.Split(';');
+            CargaBloco.Text = "";
+            for (int i = 0; i < carga.Length; i++)
+            {
+                if (int.TryParse(carga[i], out int n))
+                {
+                    Int64 valor = Convert.ToInt64(carga[i]);
+                    if (valor > QuantidadeBlocos)
+                    {
+                        MessageBox.Show("Numero do bloco informado excede quantidade de blocos da memoria RAM");
+                    }
+                    else
+                    {
+                        if (this.Tecnica == "DIRETA")
+                        {
+                            long tag = Blocos[valor].Tag;
+                            if (Linhas[Blocos[valor].Tag].Bloco < 0)
+                            {
+                                Linhas[tag].SetBloco(Blocos[valor]);
+                                Blocos[valor].Processo = "Memoria cache";
+                            }
+                            else
+                            {
+                                Blocos[Linhas[tag].Bloco].Processo = Linhas[tag].Processo;
+                                Linhas[Blocos[valor].Tag].SetBloco(Blocos[valor]);
+                                Blocos[valor].Processo = "Memoria cache";
+                            }
+
+                        }
+                        else //ASSOCIATIVA
+                        {
+                            long posicao = ProcuraEstruturaDadosContem(valor);
+                            //Verifica se a cache tem espaço vazio
+                            if (ProcuraEstruturaDadosVazio()) // true possui espaço
+                            {
+                                //Se tem, temos que verificar se o bloco ja esta na cache
+                                if (posicao < 0) //Menor que zero, não possui na cache > 0 possui na cache
+                                {
+                                    for (int j = 0; j < Linhas.Length; j++)
+                                    {
+                                        if (Linhas[j].Bloco < 0)
+                                        {
+                                            EstruturaDados[j] = new Estrutura(valor, Tempo++, 0);
+                                            Linhas[j].SetBloco(Blocos[valor]);
+                                            Blocos[valor].Processo = "Memoria cache";
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    EstruturaDados[posicao].Tempo = Tempo++;
+                                    EstruturaDados[posicao].Quantidade++;
+                                }
+                            } //Memoria Cache cheia, começa o trabalho dos algoritmos
+                            else
+                            {
+                                //Precisa checar se o bloco ja esta na cache
+
+                                if (posicao < 0) //Menor que zero, não possui na cache > 0 possui na cache
+                                {
+
+                                }
+                                else
+                                {
+                                    EstruturaDados[posicao].Tempo = Tempo++;
+                                    EstruturaDados[posicao].Quantidade++;
+                                }
+
+                                if (this.Algoritmo == "FIFO") //PRIMEIRO A ENTRAR É O PRIMEIRO A SAIR
+                                {
+                                    Fifo();
+                                }
+                                MessageBox.Show("CHEIO");
+                            }
+                        }
+                        AtualizaTabelas();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Você tem certeza que o indice do bloco é uma string?");
+                }
+                
+            }
+        }
+        private void CargaBloco_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && CargaBloco.Text != "")
+            {
+                CarregaBlocos();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Parent.Visible = true;
+        }
+
         private long Fifo()
         {
             //index do menor dado
@@ -221,7 +259,7 @@ namespace AOC.view
             long tempo = 0;
             for (long i = 0; i < EstruturaDados.Length; i++)
             {
-                if (tempio > EstruturaDados[i].Tempo){
+                if (tempo > EstruturaDados[i].Tempo){
             }
             }
             return 1;
