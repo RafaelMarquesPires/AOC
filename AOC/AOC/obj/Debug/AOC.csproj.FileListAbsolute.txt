@@ -29,3 +29,4 @@ C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.c
 C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.csproj.CoreCompileInputs.cache
 C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.exe
 C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.pdb
+C:\Users\rafaelpires\source\repos\Repositorio GITHUB\AOC\AOC\AOC\obj\Debug\AOC.view.Relatorio.resources

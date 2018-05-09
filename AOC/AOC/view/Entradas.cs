@@ -20,9 +20,9 @@ namespace AOC.view
             ErroLinhaCache.Text = "";
 
             /* FACILITAR OS TESTE */
-            TamanhoBloco.Text = "32";
-            TamanhoLinha.Text = "16";
-            TamanhoRam.Text = "32768";
+            TamanhoBloco.Text = "16";
+            TamanhoLinha.Text = "4";
+            TamanhoRam.Text = "1024";
             /* Apagar apos */
         }
         private void TamanhoRam_KeyUp(object sender, KeyEventArgs e)

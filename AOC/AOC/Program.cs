@@ -14,7 +14,6 @@ namespace AOC
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new view.Entradas());
-          //  Application.Run(new view.CPU());
         }
     }
 }
